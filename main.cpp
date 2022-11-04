@@ -1,35 +1,44 @@
-#include "node.cpp"
+#include "Tree.h"
 #include <iostream>
 #include <vector>
+#include <conio.h>
 
 using namespace std;
 
 vector<char> alphabet;
-string specialChars = "áéíóúÁÉÍÓÚñÑ";
+vector<char> specialChars = {-96, -126, -95, -94, -93, -92, -75, -112, -42, -32, -23, -91};
+int id = 107;
+Tree *tree;
 
 bool validateRestOfChars(char actual) {
-  for (char possible : specialChars) {
-    if (possible == actual)
-      return true;
-  }
-  return false;
+    for (char possible : specialChars) {
+        if (actual == possible)
+            return true;
+    }
+    return false;
 }
 
-void llenarArr() {
-  string actualChar;
-  cin >> actualChar;
-  for (char c : actualChar) {
-    if ((c >= 32 && c <= 127) || (validateRestOfChars(c)))
-      alphabet.push_back(c);
-  }
+void getInput() {
+    string actualChar;
+    getline(cin,actualChar);
+    for (char c : actualChar) {
+        if ((c >= 32 && c <= 127) || validateRestOfChars(c)){
+            alphabet.push_back(c);
+        }else{
+            cout << "Error con caracter " << c << endl;
+            getch();
+            exit(1);
+        }
+    }
 }
 
 int main() {
-  Nodo *arbol = new Nodo(2, 'b', 107);
-  cout << arbol->getChar() << endl;
-  llenarArr();
-  for (char a : alphabet) {
-    cout << a << endl;
-  }
-  return 0;
+    tree = new Tree(new Nodo(new Parameters(0, '\0', id)));
+    getInput();
+    for(char c:alphabet){
+        tree->addNode(c, id);
+    }
+    tree->printTree(tree->getHead());
+    getch();
+    return 0;
 }
