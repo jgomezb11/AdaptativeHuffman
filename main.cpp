@@ -52,7 +52,7 @@ void openFile(string filename, int position, int idThread, int limit) {
     file.read(lines, limit);
     for(int i = filename.size() - 1; i > 0; i--){
         if(filename[i] == '.'){
-            filename = filename.substr(0, i) + to_string(idThread) + ".txt";
+            filename = filename.substr(0, i) + to_string(idThread) + ".occ";
             break;
         }
     }
